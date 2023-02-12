@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello PositionController!{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{path('dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">listes des accidents de travails</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+                <span class="breadcrumb float-sm-right">
+                    {# <a href="{{path('incident.add')}}" class="float-right btn btn-primary">Ajouter nouveau accident de travail</a> #}
+                </span>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="card ">
+    <div class="card-header">
+        <h3 class="card-title">
+            <center>Listes des accidents de travail</center>
+        </h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="listIncidents" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Adherent</th>
+                    <th>Societé</th>
+                    <th>Poste</th>
+                    <th>Lieu d'accident</th>
+                    <th>Agent matériel</th>
+                    <th>Nature des lésions</th>
+                    <th>Nombre de jour d'arrêt</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for incident in incidents %}
+                <tr>
+                    <td>{{incident.adherent.lastname}} {{incident.adherent.firstname}}</td>
+                    <td>{{incident.establishment.name}}</td>
+                    <td>{{incident.position.name}}</td>
+                    <td>{{incident.incidentPlace}}</td>
+                    <td>{{incident.source}}</td>
+                    <td>{{incident.reason.name}}</td>
+                    <td>{{incident.dayOffNumber}}</td>
+                    {# <td>
+                            <a href="{{path('incident.edit' , {"id":incident.id})}}" class="btn btn-rounded btn-success" data-toggle="tooltip" data-placement="bottom">
+									<i class="m-r-10 fas fa-edit"></i>
+								</a>
+                        </td> #}
+                </tr>
+            {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+{% endblock %}
+{% block javascripts %}
+{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listIncidents', 'targets': 6 }) }}
+{# {{ include('admin/block/blockjs.datatable.html.twig', { 'table_id': 'listPositions', 'targets': 4 }) }} #}
+{% endblock %}

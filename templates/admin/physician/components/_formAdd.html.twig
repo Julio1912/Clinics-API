@@ -1,0 +1,88 @@
+{{ form_start(formPhysician)  }}
+<div class="row">
+	<div class="col-lg-6">
+		<div class="form-group">
+			{{ form_row(formPhysician.name) }}
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="form-group">
+			{{ form_row(formPhysician.firstname) }}
+		</div>
+	</div>
+</div>
+{# <div class="row">
+	<div class="col-lg-12">
+		<div class="form-group">
+			{{ form_row(formPhysician.email) }}
+		</div>
+	</div>
+</div> #}
+<div class="row">
+	{% if editMode %}
+		<div class="col-lg-6" hidden>
+			<div class="form-group">
+				{{ form_row(formPhysician.password , {"attr" : {"value" : physician.password}  }) }}
+			</div>
+		</div>
+		<div class="col-lg-6" hidden>
+			<div class="form-group">
+				{{ form_row(formPhysician.confirm_password , {"attr" : {"value" : physician.password} })  }}
+			</div>
+		</div>
+	{% else %}
+		<div class="col-lg-6">
+			<div class="form-group">
+				{{ form_row(formPhysician.password) }}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				{{ form_row(formPhysician.confirm_password) }}
+			</div>
+		</div>
+	{% endif %}
+
+
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+        {% if editMode %}
+            <div class="form-group">
+                {{ form_row(formPhysician.type_med , {"attr" : {"disabled" : true}  } ) }}
+            </div>
+        {% else %}
+           <div class="form-group">
+                {{ form_row(formPhysician.type_med) }}
+            </div> 
+        {% endif %}
+        
+		<div class="form-group">
+			{{ form_row(formPhysician.type_med) }}
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="form-group">
+			{{ form_row(formPhysician.status) }}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	{% if editMode %}
+		<div class="col-lg-6">
+			<button type="submit" class="btn btn-success btn-block">Modifier</button>
+		</div>
+	{% else %}
+		<div class="col-lg-6">
+			<button type="submit" class="btn btn-info btn-block">Ajouter</button>
+		</div>
+	{% endif %}
+
+	<div class="col-lg-6">
+		<button type="reset" class="btn btn-default btn-block">Reseter</button>
+	</div>
+</div>
+
+{{ form_end(formPhysician) }}

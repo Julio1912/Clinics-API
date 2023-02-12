@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}physician PositionController!
+{% endblock %}
+
+{% block body %}
+	<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{path('dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{path('physician.list')}}">listes médecin</a></li>
+                    {% if editMode %}
+                        <li class="breadcrumb-item active">Modifier médecins</li>
+                    {% else %}    
+                        <li class="breadcrumb-item active">Ajouter nouveaux médecins</li>
+                    {% endif %}
+                </ol>
+            </div>
+            <div class="col-sm-6">
+                <span class="breadcrumb float-sm-right">
+                    <a href="{{path('physician.list')}}" class="float-right btn btn-primary">Retour</a>
+                </span>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+	<!-- Horizontal Form -->
+	<div class="card card-info">
+		<div class="card-header">
+            {% if editMode %}
+			    <h3 class="card-title">Modifier médecins</h3>
+            {% else %}
+			    <h3 class="card-title">Ajouter nouveaux médecins</h3>
+            {% endif %}
+            
+		</div>
+		<!-- /.card-header -->
+		<!-- form start -->
+		<div class="card-body">
+			{% include "admin/physician/components/_formAdd.html.twig" %}
+		</div>
+	</div>
+	<!-- /.card -->
+{% endblock %}
+{% block javascripts %}
+	{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listPositions', 'targets': 4 }) }}
+{% endblock %}

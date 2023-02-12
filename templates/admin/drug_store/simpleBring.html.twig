@@ -1,0 +1,91 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello PositionController!{% endblock %}
+
+{% block body %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{path('dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{path('drugstore.list')}}">Listes des médicaments</a></li>
+                    <li class="breadcrumb-item active">Sorties médicaments</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+                <span class="breadcrumb float-sm-right">
+                    <a href="{{path('drugstore.list')}}" class="float-right btn btn-primary">Listes des médicaments</a>
+                </span>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="card ">
+    <div class="card-header">
+        <h3 class="card-title">
+            <center>Sorties médicamanents</center>
+        </h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        
+         {% include "admin/drug_store/components/_formAddBring.html.twig" %}
+
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+{% endblock %}
+{% block javascripts %}
+    {{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listDrug', 'targets': 3 }) }}
+
+    
+    <script src="{{asset('foAsset/select2/dist/js/select2.full.js')}}"></script>
+{# {{ include('admin/block/blockjs.datatable.html.twig', { 'table_id': 'listPositions', 'targets': 4 }) }} #}
+
+<script>
+        
+    $(document).ready(function() {
+        
+            var counter = 0;
+            $(".newMedecine").unbind('click').bind('click', function(){
+                counter++;
+                console.log(counter);
+                var element = $('#prescriptionForm').clone().val("") ;
+                
+                element.find("span.select2").remove();
+                element.find("select").select2();
+                var deleteMedecine =  $('<button/>',
+                {
+                    text: 'Supprimer',
+                    id: 'deleteMedecineForm'+counter,
+                    class: 'btn btn-danger',
+                    value: counter,
+                    style: "margin-top:-20px; margin-bottom:10px;",
+                    click: function(){
+                            $("#prescriptionForm"+$(this).val()).remove();
+                        }
+                });
+                
+                var newForm = element.attr("id", "prescriptionForm" + counter) ;
+                newForm = newForm.append(deleteMedecine);
+
+                $(newForm).appendTo('#content');
+            });
+        
+        $("#deleteMedecineForm"+counter).unbind('click').bind('click', function(){
+            console.log(counter);
+            //counter--;
+            $("#content #prescriptionForm"+counter).remove();
+        });
+
+        /*$('.diagnostic').select2();*/
+        $('.drugSelect').select2();
+    });   
+
+</script>
+{% endblock %}
+
+

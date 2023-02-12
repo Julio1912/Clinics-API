@@ -1,0 +1,98 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello PositionController!{% endblock %}
+{% block stylesheets %}
+<style>
+    .file-drop-zone-title {
+        height: 33.2vh;
+    }
+</style>
+{% endblock %}
+{% block body %}
+	<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{path('dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{path('adherent.list')}}">listes adhérent</a></li>
+                    <li class="breadcrumb-item active">Ajouter Travailleur</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+                <span class="breadcrumb float-sm-right">
+                    <a href="{{path('adherent.list')}}" class="float-right btn btn-primary">Retour</a>
+                </span>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+	<!-- Horizontal Form -->
+	<div class="card card-info">
+		<div class="card-header">
+			<h3 class="card-title">Ajouter nouveaux travailleur</h3>
+		</div>
+		<!-- /.card-header -->
+		<!-- form start -->
+		<div class="card-body">
+			{% include "admin/adherent/components/_formWorker.html.twig" %}
+		</div>
+	</div>
+	<!-- /.card -->
+{% endblock %}
+{% block javascripts %}
+	{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listPositions', 'targets': 4 }) }}
+    <script src="{{ asset('foAsset/fileinputmaster/js/plugins/piexif.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('foAsset/fileinputmaster/js/plugins/sortable.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('foAsset/fileinputmaster/js/fileinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('foAsset/fileinputmaster/js/locales/fr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('foAsset/fileinputmaster/js/locales/fr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('foAsset/fileinputmaster/themes/fas/theme.js') }}" type="text/javascript"></script>
+    <script>
+
+        $(document).on('change', '#worker_establishment', function(){
+            let $field = $(this)
+            let $establishmentField = $('#worker_establishment')
+            let $form = $field.closest('form')
+            let target = '#' + $field.attr('id').replace('establishment','position')
+            let target1 = '#' + $field.attr('id').replace('establishment','adherent')//change
+            let data = {}
+            data[$establishmentField.attr('name')] = $establishmentField.val()
+            data[$field.attr('name')] = $field.val()
+            console.log(data[$field.attr('name')])
+            $.post($form.attr('action'), data).then(function(data){
+                let $input = $(data).find(target)
+                let $input1 = $(data).find(target1)
+                $(target).replaceWith($input)
+                $(target1).replaceWith($input1)
+            })
+        })  
+        $(document).on('change', '#adherent_category', function(){
+            let $field = $(this)
+            if($field.val() != '000'){
+                $('#adherent_adherent').removeAttr('disabled')
+            }else{
+                $('#adherent_adherent').attr('disabled','disabled')
+            }
+        })
+        $(document).on('change', '#adherent_adherent', function(){
+            let $field = $(this)
+            console.log('val'+$field.val())
+        }) ; 
+        
+         $('#worker_avatarFile_file').fileinput({
+            theme: 'fas',
+            language: 'fr',
+            uploadUrl: '',
+            allowedFileExtensions: ['jpeg', 'jpg', 'png', 'JPEG' , 'JPG' , 'PNG' ],
+            showUpload: false,
+            showCaption: true,
+            showCancel: true,
+            showUploadedThumbs: true,
+            showRemove: true,
+            showPreview: true,
+            maxFileSize: 80000 ,
+        });
+
+    </script>
+{% endblock %}

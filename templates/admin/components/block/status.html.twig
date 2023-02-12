@@ -1,0 +1,7 @@
+{% set status = etat_status %}
+
+{% if (status == 1 ) %}
+    <span class="nav-icon fas fa-circle text-success text-xs"></span> Activé
+{% else %}
+<span class="nav-icon fas fa-circle text-danger"></span> Désactivé
+{% endif %}

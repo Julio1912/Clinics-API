@@ -1,0 +1,30 @@
+
+###> symfony/framework-bundle ###
+/.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/public/uploads/avatarAdherent
+/public/uploads/avatarFamily
+/public/uploads/avatarWorker
+/public/uploads/pdf
+/var/
+/vendor/
+/vendor1/
+/database-dump
+/smisa(1).sql
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+/composer.lock
+/symfony.loc
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

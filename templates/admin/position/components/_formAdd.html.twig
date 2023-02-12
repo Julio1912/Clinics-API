@@ -1,0 +1,31 @@
+{{ form_start(formPosition)  }}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formPosition.name) }}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formPosition.status) }}
+        </div>
+    </div>
+</div>
+
+<div class="row"> 
+    {% if editMode %}
+        <div class="col-lg-6">
+            <button type="submit" class="btn btn-success btn-block">Modifier</button>
+        </div>
+    {% else %}
+        <div class="col-lg-6">
+            <button type="submit" class="btn btn-info btn-block">Ajouter</button>
+        </div>
+    {% endif %}
+    
+    <div class="col-lg-6">
+	    <button type="reset" class="btn btn-default btn-block">Reseter</button>
+    </div>
+</div>
+
+{{ form_end(formPosition) }}
