@@ -1,0 +1,227 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello PositionController!
+{% endblock %}
+{% block stylesheets %}
+	
+{% endblock %}
+
+{% block body %}
+	<section class="content-header" id="content-load">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="{{path('dashboard')}}">Dashboard</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{path('consultation.list.consult' , {'type':'undelivered'})}}">Consultations</a>
+						</li>
+						<li class="breadcrumb-item active">Details</li>
+					</ol>
+				</div>
+				<div class="col-sm-6">
+				<span class="breadcrumb float-sm-right">
+					<a href="{{path('consultation.list.consult' , {'type':'undelivered'})}}" class="float-right btn btn-primary">Retour</a>
+				</span>
+			</div>
+
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					{# <div class="callout callout-info">
+						<h5>
+							<i class="fas fa-info"></i>
+							Note:</h5>
+						This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+					</div> #}
+
+
+					<!-- Main content -->
+					<div
+						class="invoice p-3 mb-3">
+						<!-- title row -->
+						<div class="row">
+							<div class="col-12">
+								<h4>
+									<i class="fas fa-globe"></i>
+									SMISA
+									<small class="float-right">Date: {{consultation.created | date('d/m/Y')}}</small>
+								</h4>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- info row -->
+						<div class="row invoice-info">
+							<div class="col-sm-4 invoice-col">
+								Patient
+								<address>
+									<strong>
+                                    {% if consultation.adherent is null %}
+                                        {{consultation.name}} {{consultation.firstname}}
+										</strong><br>
+										Age: {{consultation.age}} Ans<br>
+                                    {% else %}
+                                        {{consultation.adherent.lastname}} {{consultation.adherent.firstname}}
+										 </strong><br>
+										Matricule: {{consultation.adherent.affiliateNumber}}<br>
+                                    {% endif %}
+								</address>
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-4 invoice-col">
+								Docteur
+								<address>
+									<strong>{{consultation.physician.name}} {{consultation.physician.firstname}}</strong><br>
+									Id: {{consultation.physician.email}}
+								</address>
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-4 invoice-col">
+								Consultation <br>
+								<b>Type :</b>
+								{{consultation.type}}<br>
+								<b>Numéros</b>
+								{{consultation.id}}<br>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+
+						<!-- Table row -->
+						<div class="row">
+							<div class="col-12 table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Nom</th>
+                                            <th>Nombre de jour</th>
+                                            <th>Matin</th>
+                                            <th>Midi</th>
+                                            <th>Soir</th>
+                                            <th>Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											{% for prescription in consultation.prescription %}
+                                                <tr>
+                                                    <th>{{prescription.drugName.name}}</th>
+                                                    <td>{{prescription.numberOfDayPrescribed}}</td>
+                                                    <td>{{prescription.morning}} {{prescription.drugName.measure}}</td>
+                                                    <td>{{prescription.noon}} {{prescription.drugName.measure}}</td>
+                                                    <td>{{prescription.evening}} {{prescription.drugName.measure}}</td>
+                                                    <td>{{prescription.totalDrugs}} {{prescription.drugName.measure}}</td>
+                                                </tr>
+                                            {% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+
+					
+
+						<!-- this row will not appear when printing -->
+						<div class="row ">
+							<div class="col-md-offset-3">
+								{% if "ROLE_DRUG_STORE" in app.user.roles %}
+									{% set file = asset('uploads/pdf/consultation/'~ consultation.filePrescription) %}
+									
+									<button class="btn btn-info btn-rounded" onclick="printJS('{{file}}')">
+										{# <span class="fas fa-print"></span> #}
+										<i class="fas fa-print"></i>Imprimer l'Ordonnance
+									</button>
+								
+								{% endif %}
+								{% if "ROLE_MEDC" in app.user.roles %}
+									{% set file = asset('uploads/pdf/consultation/'~ consultation.filePrescription) %}
+									
+									<button class="btn btn-info btn-rounded" onclick="printJS('{{file}}')">
+										{# <span class="fas fa-print"></span> #}
+										<i class="fas fa-print"></i>Imprimer l'Ordonnance
+									</button>
+								
+								{% endif %}
+
+								{# <a href="invoice-print.html" target="_blank" class="btn btn-default">
+									<i class="fas fa-print"></i>
+									Imprimer l'Ordonnance</a> #}
+
+								{# <button type="button" class="btn btn-success float-right">
+									<i class="far fa-credit-card"></i>
+									Imprimer l'Ordonnance
+								</button> #}
+							{# </div>
+							<div class="col-4"> #} &nbsp;&nbsp;&nbsp;
+							{% if consultation.status == 0 %}
+							
+								<a href="{{path('consultation.validate',{"id": consultation.id})}}" class="btn btn-primary "
+									style="margin-right: 5px;">
+										<i class="fas fa-download"></i>
+									Valider la consultation
+								</a>
+
+							{% endif %}
+
+							</div>
+						</div>
+					</div>
+					<!-- /.invoice -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+
+{% endblock %}
+{% block javascripts %}
+	{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listConsultations', 'targets': 3 }) }}
+	{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listConsultationsLivres', 'targets': 1 }) }}
+	{{ include('admin/components/block/blockjs.datatable.html.twig', { 'table_id': 'listConsultationsNonLivres', 'targets': 1 }) }}
+	{# {{ include('admin/block/blockjs.datatable.html.twig', { 'table_id': 'listPositions', 'targets': 4 }) }} #}
+	<script language="javascript" type="text/javascript">
+
+		(function printJS(file) {
+// console.log(file) ;
+// var fileprint = file ;
+printJS(file);
+
+})();
+
+{
+# function myPrint() {
+printJS("{{ asset('uploads/pdf/consultation/Ordonnance-Smisa Gold 11.pdf') }}");
+}
+#
+} {
+# $('#printBtn').click(myPrint);
+#
+}
+
+document.onreadystatechange = function () {
+var state = document.readyState
+if (state == 'interactive') {
+document.getElementById('content-load').style.visibility = "hidden";
+} else if (state == 'complete') {
+setTimeout(function () {
+document.getElementById('interactive');
+document.getElementById('load').style.visibility = "hidden";
+document.getElementById('content-load').style.visibility = "visible";
+}, 1000);
+}
+}
+	</script>
+{% endblock %}

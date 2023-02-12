@@ -1,0 +1,40 @@
+<div class="form-group"></br>
+    <button class="newMedecine btn btn-primary">+ Médicament</button>
+</div>
+<form name="add_medecines" method="post" id="add_medecines_forms" action={{path('drugstore.simple.bring')}}>
+
+    <div id="prescriptionForm" style="border: 1px;">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="">Médicament</label>
+                    <select name="drugName[]" id="drugSelect" class="form-control drugSelect">
+                        {% for drug in drugLists %}
+                            <option value="{{drug.id}}">{{drug.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label for="">Quantité</label>
+                    <input type="number" name="quantity[]" class="form-control">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="content"></div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <button type="submit" class="btn btn-info" name="b_print" onclick="printdiv('demo');">
+                Sortie
+            </button>
+
+        </div>
+    </div>
+
+</form>

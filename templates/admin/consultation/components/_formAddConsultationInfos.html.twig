@@ -1,0 +1,92 @@
+{# {{ form_start(formConsultation) }}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formConsultation.type) }}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formConsultation.diagnostic) }}
+        </div>
+    </div>
+</div>
+
+<div id="addMedecine">
+
+</div>
+
+<div class="card card-info">
+	<div class="card-header">
+		<h3 class="card-title">Ajouter les informations</h3>
+	</div>
+	<!-- /.card-header -->
+	<!-- form start -->
+	<div class="card-body">
+
+	</div>
+</div>
+<div class="col-lg-6">
+    <button type="submit" class="btn btn-info btn-block">Ajouter</button>
+</div>
+{{ form_end(formConsultation) }} #}
+
+{# 
+
+
+
+
+
+
+
+
+
+
+
+            <table>
+                <tr>
+                    <td>
+                        Médicament
+                    </td>
+                    <td>
+                        Nombre de jours de prise
+                    </td>
+                    <td>
+                        Matin
+                    </td>
+                    <td>
+                        Midi
+                    </td>
+                    <td>
+                        Soir
+                    </td>
+                </tr>
+            </table>
+            <table id="add_more_medecines">
+                <tr>
+                    <td>
+                        <input type="text" name="name[]" />
+                    </td>
+                    <td>
+                        <input type="number" name="day[]" />
+                    </td>
+                    <td>
+                        <input type="number" name="morning[]" />
+                    </td>
+                    <td>
+                        <input type="number" name="mid_day[]" />
+                    </td>
+                    <td>
+                        <input type="number" name="evening[]" />
+                    </td>
+                    <td>
+                        <Button id="add" class="addMed btn btn-primary">
+                            Add more
+                        </Button>
+                    </td>
+                </tr>
+            </table> #}
+            <input type="submit" name="submit" value="Terminer la consultation" />
+        </form>
+    </div>
+</div>
